@@ -1,7 +1,11 @@
+import uuid
 
 
 class Drive:
-    def __init__(self, name, capacity, id=None):
+    def __init__(self, name=None, capacity=-1, id=None):
         self.name = name
         self.capacity = capacity
-        id = id if id else 0  # if id is None, set it to a new random id
+        self._id = id
+
+    def get_drive_id(self):
+        return self._id
