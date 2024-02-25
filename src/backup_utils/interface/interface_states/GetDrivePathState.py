@@ -24,6 +24,6 @@ class GetDrivePathState(InterfaceState):
         local_database = LocalDatabase.load(path)
         if local_database is None:
             return CraeteNewDatabaseState(self._databases_list, path), command_output 
-        if not self._databases_list.add_database(local_database):
+        if not self._databases_list.add_database(local_database, path):
             raise ValueError(f'Drive {local_database.get_drive_name()} already exists')
         return DefaultInterfaceState.DefaultInterfaceState(self._databases_list), f'Loaded successfully the drive: {local_database.get_drive_name()}'

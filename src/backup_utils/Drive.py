@@ -9,3 +9,6 @@ class Drive:
 
     def get_drive_id(self):
         return self._id
+    
+    def __eq__(self, other: "Drive"):
+        return self._id == other._id

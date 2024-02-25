@@ -10,7 +10,9 @@ class DefaultInterfaceState(InterfaceState):
         super().__init__()
         self.available_commands = [
             InterfaceCommand.ADD_DRIVE,
+            InterfaceCommand.ADD_FOLDER,
             InterfaceCommand.LIST_DRIVES,
+            InterfaceCommand.LIST_FOLDERS,
             InterfaceCommand.QUIT
         ]
         self._databases_list = databases_list
@@ -22,11 +24,13 @@ class DefaultInterfaceState(InterfaceState):
         if command == InterfaceCommand.QUIT:
             exit()
         elif command == InterfaceCommand.LIST_DRIVES:
-            command_output = str(self._databases_list)
+            command_output = self._databases_list.get_drive_info_str()
         elif command == InterfaceCommand.ADD_DRIVE:
             next_state = GetDrivePathState(self._databases_list)
             return next_state, ''
-        else:
-            self.command_output = 'Invalid command'
+        elif command == InterfaceCommand.LIST_FOLDERS:
+            command_output = self._databases_list.get_folder_info_str()
+        elif command == InterfaceCommand.INVALID:
+            command_output = 'Invalid command'
 
         return DefaultInterfaceState(self._databases_list), command_output

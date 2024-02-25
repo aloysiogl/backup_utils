@@ -16,7 +16,9 @@ Which runs interactively, clears the screen each time and shows which are the av
 Utilities
 Screen, commands, output: that's what I should see
 - [X] --list-drives list known drives
-- [ ] --add-drive, adds drive to the list of known drives
+- [X] --add-drive, adds drive to the list of known drives
+- [ ] --add-folder, adds folder to the list of known folders
+- [ ] --list-folders, list known folders
 - [ ] --set-master sets a master drive to a top level folder which does not have a master drive
 - [ ] --set-slave sets a slave drive to a top level folder (needs to veriry conflict with master drive or if was already set)
 - [ ] --check-update-needed, checks if a top level folder needs to be updated on some drive (verify if there was no wrong update as well)

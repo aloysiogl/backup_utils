@@ -15,7 +15,7 @@ class CraeteNewDatabaseState(InterfaceState):
         local_database = LocalDatabase(self._new_database_path)
         local_database.update_drive_name(command)
         local_database.save()
-        if not self._databases_list.add_database(local_database):
+        if not self._databases_list.add_database(local_database, self._new_database_path):
             raise ValueError(f'Drive {command} already exists')
         return DefaultInterfaceState.DefaultInterfaceState(self._databases_list), f'New drive {command} created successfully!'
 
