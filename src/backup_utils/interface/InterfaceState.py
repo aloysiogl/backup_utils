@@ -12,4 +12,7 @@ class InterfaceState:
         pass
 
     def get_available_commands(self) -> str:
-        return ', '.join([str(command) for command in self.available_commands])
+        return '; '.join([str(command) for command in self.available_commands])
+
+    def get_next_state(self) -> ('InterfaceState', str):
+        raise NotImplementedError

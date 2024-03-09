@@ -30,5 +30,19 @@ class Interface:
         self._current_state, self._command_output = self._current_state.execute_command(
             user_input)
 
+    def run(self):
+        self.clear_screen()
+        self.render()
+
+        while True:
+            if not (hasattr(self._current_state, "is_partial") and self._current_state.is_partial):
+                user_input = input('>')
+                self.process_user_input(user_input)
+            else:
+                self._current_state, self._command_output = self._current_state.get_next_state()
+            self.clear_screen()
+            self.render()
+
+
     def clear_screen(self):
         print(chr(27) + "[2J")
