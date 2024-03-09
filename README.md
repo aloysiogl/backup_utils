@@ -2,6 +2,8 @@
 
 I wanted something personnal to manage my backups and did not find anything that suited me well, so I decided to create this tool. Here are the features I want initially:
 
+TODOs:
+- [ ] Need to save info in the databases and merge info to save on the databases at every important step
 - [ ] Be able to know if a directory has changed, save previous state in metadata file
 - [ ] Set up a master drive and slave drives for each folder I want to backup, and keep that stored in the backup general metadata.
 - [ ] Store latest backup sync date in backup metadata.
@@ -17,16 +19,19 @@ Utilities
 Screen, commands, output: that's what I should see
 - [X] --list-drives list known drives
 - [X] --add-drive, adds drive to the list of known drives
-- [ ] --add-folder, adds folder to the list of known folders
-- [ ] --list-folders, list known folders
+- [X] --add-folder, adds folder to the list of known folders
+- [X] --list-folders, list known folders (Do TODOs to finish this)
 - [ ] --set-master sets a master drive to a top level folder which does not have a master drive
 - [ ] --set-slave sets a slave drive to a top level folder (needs to veriry conflict with master drive or if was already set)
 - [ ] --check-update-needed, checks if a top level folder needs to be updated on some drive (verify if there was no wrong update as well)
 - [ ] --update, updates a top level folder on a drive
+
+## What can I currently do?
+- Add drives, but they do not update each other
+- Add folders, but they do not update each other
 
 ## Comparison tool
 - [ ] 1st just compare if the files are the same
 - [ ] Be able to see if I moved or renamed files
 - [ ] Generalize this to the greatest group in some kind of visulization
 - [ ] Compare the files only locally in their respective folders for fast comparison?
-

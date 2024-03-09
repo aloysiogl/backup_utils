@@ -38,8 +38,10 @@ class LocalDatabase:
     def get_drive_id(self):
         return self._drive.get_drive_id()
 
-    # TODO: implement full merge (also for folders)
+    def add_folder(self, folder: BackupFolder):
+        self._known_folders.append(folder)
 
+    # TODO: implement full merge (also for folders)
     def merge_drive_list(self, other: 'LocalDatabase'):
         # TODO: will need some changes if there are updates to the drive and if drives are removed as well
         for drive in other._known_drives:

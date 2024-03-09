@@ -2,7 +2,7 @@ import uuid
 
 
 class Drive:
-    def __init__(self, name=None, capacity=-1, id=None):
+    def __init__(self, name=None, capacity=-1, id=str(uuid.uuid4())):
         self.name = name
         self.capacity = capacity
         self._id = id

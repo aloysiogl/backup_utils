@@ -3,6 +3,7 @@ from ..InterfaceState import InterfaceState
 from ..InterfaceCommand import InterfaceCommand
 from ...LocalDatabaseList import LocalDatabaseList
 from .GetDrivePathState import GetDrivePathState
+from .AddFolderState import AddFolderState
 
 
 class DefaultInterfaceState(InterfaceState):
@@ -30,6 +31,8 @@ class DefaultInterfaceState(InterfaceState):
             return next_state, ''
         elif command == InterfaceCommand.LIST_FOLDERS:
             command_output = self._databases_list.get_folder_info_str()
+        elif command == InterfaceCommand.ADD_FOLDER:
+            return AddFolderState(self._databases_list), '' 
         elif command == InterfaceCommand.INVALID:
             command_output = 'Invalid command'
 
