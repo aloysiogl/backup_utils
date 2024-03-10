@@ -4,7 +4,7 @@ I wanted something personnal to manage my backups and did not find anything that
 
 TODOs:
 - [X] Need to save info in the databases and merge info to save on the databases at every important step
-- [ ] CLI arguments to already start with a drive added
+- [X] CLI arguments to already start with a drive added
 - [ ] Be able to add a slave drive and in the list of folders show master and slaves
 - [ ] Be able to know if a directory has changed, save previous state in metadata file
 - [ ] Set up a master drive and slave drives for each folder I want to backup, and keep that stored in the backup general metadata.

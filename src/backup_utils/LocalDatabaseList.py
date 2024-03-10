@@ -86,9 +86,14 @@ class LocalDatabaseList:
 
     def get_folder_info_str(self) -> str:
         folders_list = self.get_merged_folder_list()
+        drives_list = self.get_merged_drive_list()
         res = ''
         for folder in folders_list:
-            res += f"{folder.name:10s} {folder.get_master_drive_id():10s}\n"
+            master_drive = Drive.get_drive_from_id(
+                folder.get_master_drive_id(), drives_list)
+            res += f"{folder.name:10s}\n"
+            name = master_drive.name if master_drive else "Unknown"
+            res += f"  Master: {name:10s}\n"
         return res
 
     def get_drive_info_str(self) -> str:

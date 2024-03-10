@@ -36,6 +36,13 @@ class Drive:
         if not isinstance(other, Drive):
             return False
         return self._id == other._id
+
+    @staticmethod
+    def get_drive_from_id(id: DriveId, drives: List['Drive']) -> Optional['Drive']:
+        for drive in drives:
+            if drive.id == id:
+                return drive
+        return None
  
     @staticmethod
     def merge_drive_lists(drive_lists: List[List['Drive']]):

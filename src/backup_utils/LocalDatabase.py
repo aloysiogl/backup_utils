@@ -55,7 +55,8 @@ class LocalDatabase:
         if not os.path.exists(local_database_path):
             return None
         with open(local_database_path, 'rb') as file:
-            return pickle.load(file)
+            loaded: LocalDatabase = pickle.load(file)
+            return loaded
 
     def save(self):
         with open(self._local_database_path, 'wb') as file:

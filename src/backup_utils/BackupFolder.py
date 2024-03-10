@@ -15,7 +15,7 @@ class BackupFolder:
     def add_slave_drive(self, drive_id: DriveId) -> None:
         self._backup_drive_ids.append(drive_id)
 
-    def get_master_drive_id(self) -> str:
+    def get_master_drive_id(self) -> DriveId:
         return self._master_drive_id
 
     def get_slave_drive_ids(self) -> List[DriveId]:

@@ -3,7 +3,7 @@ from ..InterfaceState import NextStateWithMessage
 from .PromptState import PromptState
 from ...BackupFolder import BackupFolder
 from ...LocalDatabaseList import LocalDatabaseList
-import backup_utils.interface.interface_states.DefaultInterfaceState as DefaultInterfaceState
+from . import DefaultInterfaceState
 
 
 class AddFolderState(PartialState):

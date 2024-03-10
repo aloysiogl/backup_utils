@@ -1,13 +1,23 @@
-from typing import List
+from pathlib import Path
+from typing import List, Optional
 from ..Drive import Drive
 from .interface_states.DefaultInterfaceState import DefaultInterfaceState
 from .InterfaceState import InterfaceState
+from ..LocalDatabaseList import LocalDatabaseList
+from ..LocalDatabase import LocalDatabase
 
 
 class Interface:
-    def __init__(self):
+    def __init__(self, init_path: Optional[Path] = None):
+        starting_database_list = LocalDatabaseList()
+        if init_path is not None:
+            loaded_database = LocalDatabase.load(init_path)
+            if loaded_database is not None:
+                starting_database_list.add_database(loaded_database, init_path)
+
+        self._current_state: InterfaceState = DefaultInterfaceState(starting_database_list)
         self._command_output = ''
-        self._current_state: InterfaceState = DefaultInterfaceState()
+        
 
     def drives_list_str(self, drives: List[Drive]):
         return_str = ''

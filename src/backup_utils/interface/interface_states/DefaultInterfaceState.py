@@ -16,8 +16,6 @@ class DefaultInterfaceState(InterfaceState):
             InterfaceCommandEnum.QUIT
         ]
         
-
-
     def execute_command(self, command: str) -> NextStateWithMessage:
         parsed_command = InterfaceCommandEnum.from_str(command)
         command_output = ''
