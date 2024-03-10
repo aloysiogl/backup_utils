@@ -1,9 +1,11 @@
 import uuid
 from typing import Optional
 
+class DriveId(str):
+    pass
 
 class Drive:
-    def __init__(self, name: Optional[str]= None, capacity: int=-1, id: str=str(uuid.uuid4())):
+    def __init__(self, name: Optional[str]= None, capacity: int=-1, id: DriveId=DriveId(str(uuid.uuid4()))):
         self.name = name
         self.capacity = capacity
         self._id = id

@@ -1,22 +1,24 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from datetime import datetime
+from .Drive import DriveId
 import copy
 
+BackupRecord = Tuple[DriveId, datetime]
+
 class BackupFolder:
-    def __init__(self, folder_name: str, master_drive_id: str) -> None:
+    def __init__(self, folder_name: str, master_drive_id: DriveId) -> None:
         self._folder_name = folder_name
         self._master_drive_id = master_drive_id
         self._backup_drive_ids = [master_drive_id]
-        # TODO add the update drive in the history and create custom type for that
-        self._update_date_history: Dict[str, List[datetime]] = {}
+        self._update_date_history: Dict[str, List[BackupRecord]] = {}
 
-    def add_slave_drive(self, drive_id: str) -> None:
+    def add_slave_drive(self, drive_id: DriveId) -> None:
         self._backup_drive_ids.append(drive_id)
 
     def get_master_drive_id(self) -> str:
         return self._master_drive_id
 
-    def get_slave_drive_ids(self) -> List[str]:
+    def get_slave_drive_ids(self) -> List[DriveId]:
         return self._backup_drive_ids
 
     @property
@@ -24,7 +26,7 @@ class BackupFolder:
         return self._folder_name
 
     @staticmethod
-    def compare_update_histories(h1: List[datetime], h2: List[datetime]) -> bool:
+    def compare_update_histories(h1: List[BackupRecord], h2: List[BackupRecord]) -> bool:
         # TODO: should check if every date is the same other than the length
         # Returns if h1 is greater or equal than h2
         return len(h1) >= len(h2)

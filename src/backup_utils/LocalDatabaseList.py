@@ -3,7 +3,7 @@ from typing import List, Dict, Set
 from pathlib import Path
 
 from .LocalDatabase import LocalDatabase
-from .Drive import Drive
+from .Drive import Drive, DriveId
 from .BackupFolder import BackupFolder
 
 class LocalDatabaseList:
@@ -24,13 +24,13 @@ class LocalDatabaseList:
     
     def get_drive_ids_for_folder(self, folder_name: str):
         root_paths = self._path_to_database.keys()
-        ids: List[str] = []
+        ids: List[DriveId] = []
         for path in root_paths:
             if folder_name in filter(os.path.isdir, os.listdir(path)):
                 ids.append(self._path_to_database[path].get_drive_id())
         return ids
 
-    def get_drive_name_from_id(self, drive_id: str):
+    def get_drive_name_from_id(self, drive_id: DriveId):
         for database in self._database_list:
             if database.get_drive_id() == drive_id:
                 return database.get_drive_name()
