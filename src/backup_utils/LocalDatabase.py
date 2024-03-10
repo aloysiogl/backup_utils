@@ -10,24 +10,23 @@ from .BackupFolder import BackupFolder
 class LocalDatabase:
     """This class manages the data locally stored in a directory"""
 
-    def __init__(self, directory_path: Path):
+    def __init__(self, directory_path: Path, drive_name: str):
         self._local_database_path = f'{directory_path}/.backup_info.pickle'
-        self._drive = Drive()
+        self._drive = Drive(name=drive_name)
         self._known_drives = [self._drive]
         self._known_folders: List[BackupFolder] = []
 
-    def update_drive_info(self, name: str, capacity: int):
-        self._drive.name = name
-        self._drive.capacity = capacity
+    def set_known_folders(self, folders: List[BackupFolder]):
+        self._known_folders = folders
+    
+    def set_known_drives(self, drives: List[Drive]):
+        self._known_drives = drives
 
     def get_folders(self) -> List[BackupFolder]:
         return self._known_folders
 
     def get_known_drives(self) -> List[Drive]:
         return self._known_drives
-
-    def update_drive_name(self, name: str):
-        self._drive.name = name
 
     def get_drive_name(self):
         return self._drive.name
@@ -36,7 +35,7 @@ class LocalDatabase:
         return self._drive.capacity
 
     def get_drive_id(self):
-        return self._drive.get_drive_id()
+        return self._drive.id
 
     def add_folder(self, folder: BackupFolder):
         self._known_folders.append(folder)

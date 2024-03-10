@@ -21,6 +21,14 @@ class BackupFolder:
     def get_slave_drive_ids(self) -> List[DriveId]:
         return self._backup_drive_ids
 
+    def __hash__(self) -> int:
+        return hash(self._folder_name)
+    
+    def __eq__(self, __value: object) -> bool:
+        if not isinstance(__value, BackupFolder):
+            raise ValueError(f"Trying to compare BackupFolder with {__value}")
+        return self._folder_name == __value._folder_name and self._master_drive_id == __value._master_drive_id
+
     @property
     def name(self) -> str:
         return self._folder_name
@@ -56,9 +64,10 @@ class BackupFolder:
 
 
     @staticmethod
-    def merge_backup_folder_lists(backup_folder_list: List['BackupFolder']):
+    def merge_backup_folder_lists(backup_folder_list: List[List['BackupFolder']]):
         name_to_most_recent_folder: Dict[str, 'BackupFolder'] = {}
-        for backup_folder in backup_folder_list:
+        flattened_list = [item for sublist in backup_folder_list for item in sublist]
+        for backup_folder in flattened_list:
             if backup_folder.name not in name_to_most_recent_folder:
                 name_to_most_recent_folder[backup_folder.name] = copy.deepcopy(backup_folder)
             else:

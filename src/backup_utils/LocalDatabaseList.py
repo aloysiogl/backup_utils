@@ -1,10 +1,12 @@
 import os
+import copy
 from typing import List, Dict, Set
 from pathlib import Path
 
 from .LocalDatabase import LocalDatabase
 from .Drive import Drive, DriveId
 from .BackupFolder import BackupFolder
+
 
 class LocalDatabaseList:
     def __init__(self):
@@ -14,14 +16,33 @@ class LocalDatabaseList:
     def get_folders_without_master(self):
         root_paths = self._path_to_database.keys()
         toplevel_paths: Set[str] = set()
-        folders_with_master = list(map(lambda folder: folder.name, self.get_merged_folder_list()))
+        folders_with_master = list(
+            map(lambda folder: folder.name, self.get_merged_folder_list()))
         for path in root_paths:
             def filter_func(x: str):
                 return os.path.isdir(os.path.join(path, x)) and x not in folders_with_master
-            dirs = filter(filter_func, os.listdir(path)) 
+            dirs = filter(filter_func, os.listdir(path))
             toplevel_paths.update(dirs)
         return toplevel_paths
-    
+
+    def update_local_databases(self):
+        merged_folders = self.get_merged_folder_list()
+        merged_drives = self.get_merged_drive_list()
+        for database in self._database_list:
+            database.set_known_folders(copy.deepcopy(merged_folders))
+            database.set_known_drives(copy.deepcopy(merged_drives))
+
+    def get_merged_folder_list(self):
+        folders_lists: List[List[BackupFolder]] = []
+        for database in self._database_list:
+            folders_lists.append(database.get_folders())
+        return BackupFolder.merge_backup_folder_lists(folders_lists)
+
+    def get_merged_drive_list(self):
+        drives_lists = [database.get_known_drives()
+                        for database in self._database_list]
+        return Drive.merge_drive_lists(drives_lists)
+
     def get_drive_ids_for_folder(self, folder_name: str):
         root_paths = self._path_to_database.keys()
         ids: List[DriveId] = []
@@ -35,11 +56,17 @@ class LocalDatabaseList:
             if database.get_drive_id() == drive_id:
                 return database.get_drive_name()
 
-        raise ValueError(f"Trying to get drive with id {drive_id}, but not found")
+        raise ValueError(
+            f"Trying to get drive with id {drive_id}, but not found")
 
     def add_folder(self, folder: BackupFolder) -> bool:
+        folders = self.get_merged_folder_list()
+        if folder in folders:
+            raise ValueError(
+                f"Trying to add folder {folder.name} but already exists")
         for database in self._database_list:
             database.add_folder(folder)
+        self.save_all()
         return True
 
     def add_database(self, database: LocalDatabase, loaded_path: Path) -> bool:
@@ -47,29 +74,25 @@ class LocalDatabaseList:
         if database.get_drive_id() not in drive_ids:
             self._database_list.append(database)
             self._path_to_database[str(loaded_path)] = database
+            self.save_all()
             return True
-        return False
+        raise ValueError(
+            f"Trying to add database with drive id {database.get_drive_id()} but already exists")
 
-    def get_merged_folder_list(self):
-        folders_list: List[BackupFolder] = []
+    def save_all(self):
+        self.update_local_databases()
         for database in self._database_list:
-            folders_list += database.get_folders()
-        return BackupFolder.merge_backup_folder_lists(folders_list)
+            database.save()
 
     def get_folder_info_str(self) -> str:
         folders_list = self.get_merged_folder_list()
-        res = '' 
+        res = ''
         for folder in folders_list:
             res += f"{folder.name:10s} {folder.get_master_drive_id():10s}\n"
         return res
 
     def get_drive_info_str(self) -> str:
-        known_drives: Dict[str, Drive] = {}
-        for database in self._database_list:
-            for drive in database.get_known_drives():
-                known_drives[drive.get_drive_id()] = drive
         res = ''
-        for drive in known_drives.values():
+        for drive in self.get_merged_drive_list():
             res += f"{drive.name:10s} {drive.capacity:10d}\n"
-
         return res

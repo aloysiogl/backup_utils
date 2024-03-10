@@ -3,8 +3,9 @@
 I wanted something personnal to manage my backups and did not find anything that suited me well, so I decided to create this tool. Here are the features I want initially:
 
 TODOs:
-- [ ] Need to save info in the databases and merge info to save on the databases at every important step
+- [X] Need to save info in the databases and merge info to save on the databases at every important step
 - [ ] CLI arguments to already start with a drive added
+- [ ] Be able to add a slave drive and in the list of folders show master and slaves
 - [ ] Be able to know if a directory has changed, save previous state in metadata file
 - [ ] Set up a master drive and slave drives for each folder I want to backup, and keep that stored in the backup general metadata.
 - [ ] Store latest backup sync date in backup metadata.
@@ -22,7 +23,7 @@ Screen, commands, output: that's what I should see
 - [X] --add-drive, adds drive to the list of known drives
 - [X] --add-folder, adds folder to the list of known folders
 - [X] --list-folders, list known folders (Do TODOs to finish this)
-- [ ] --set-master sets a master drive to a top level folder which does not have a master drive
+- [X] --set-master sets a master drive to a top level folder which does not have a master drive
 - [ ] --set-slave sets a slave drive to a top level folder (needs to veriry conflict with master drive or if was already set)
 - [ ] --check-update-needed, checks if a top level folder needs to be updated on some drive (verify if there was no wrong update as well)
 - [ ] --update, updates a top level folder on a drive
@@ -30,6 +31,8 @@ Screen, commands, output: that's what I should see
 ## What can I currently do?
 - Add drives, but they do not update each other
 - Add folders, but they do not update each other
+- Add master when adding folders
+- Updates the files on both when current adding drive and folder operations are performed
 
 ## Comparison tool
 - [ ] 1st just compare if the files are the same
