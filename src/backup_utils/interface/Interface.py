@@ -1,4 +1,5 @@
-import os
+from typing import List
+from ..Drive import Drive
 from .interface_states.DefaultInterfaceState import DefaultInterfaceState
 from .InterfaceState import InterfaceState
 
@@ -8,7 +9,7 @@ class Interface:
         self._command_output = ''
         self._current_state: InterfaceState = DefaultInterfaceState()
 
-    def drives_list_str(self, drives):
+    def drives_list_str(self, drives: List[Drive]):
         return_str = ''
         for drive in drives:
             return_str += f'{drive.name} {drive.capacity}\n'

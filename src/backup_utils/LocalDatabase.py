@@ -1,7 +1,7 @@
 import os
-import copy
 import pickle
 from typing import List
+from pathlib import Path
 
 from .Drive import Drive
 from .BackupFolder import BackupFolder
@@ -10,7 +10,7 @@ from .BackupFolder import BackupFolder
 class LocalDatabase:
     """This class manages the data locally stored in a directory"""
 
-    def __init__(self, directory_path: str):
+    def __init__(self, directory_path: Path):
         self._local_database_path = f'{directory_path}/.backup_info.pickle'
         self._drive = Drive()
         self._known_drives = [self._drive]
@@ -48,7 +48,8 @@ class LocalDatabase:
             if drive not in self._known_drives:
                 self._known_drives.append(drive.copy())
 
-    def load(directory_path: str):
+    @staticmethod
+    def load(directory_path: Path):
         # TODO convert from pickle to a real database or something that I can change over time
         local_database_path = f'{directory_path}/.backup_info.pickle'
 

@@ -1,4 +1,5 @@
-from typing import List
+from typing import List, Dict
+from datetime import datetime
 import copy
 
 class BackupFolder:
@@ -6,7 +7,8 @@ class BackupFolder:
         self._folder_name = folder_name
         self._master_drive_id = master_drive_id
         self._backup_drive_ids = [master_drive_id]
-        self._update_date_history = {}
+        # TODO add the update drive in the history and create custom type for that
+        self._update_date_history: Dict[str, List[datetime]] = {}
 
     def add_slave_drive(self, drive_id: str) -> None:
         self._backup_drive_ids.append(drive_id)
@@ -21,7 +23,8 @@ class BackupFolder:
     def name(self) -> str:
         return self._folder_name
 
-    def compare_update_histories(h1, h2) -> bool:
+    @staticmethod
+    def compare_update_histories(h1: List[datetime], h2: List[datetime]) -> bool:
         # TODO: should check if every date is the same other than the length
         # Returns if h1 is greater or equal than h2
         return len(h1) >= len(h2)
@@ -50,8 +53,9 @@ class BackupFolder:
         return greater_or_equal
 
 
+    @staticmethod
     def merge_backup_folder_lists(backup_folder_list: List['BackupFolder']):
-        name_to_most_recent_folder = {}
+        name_to_most_recent_folder: Dict[str, 'BackupFolder'] = {}
         for backup_folder in backup_folder_list:
             if backup_folder.name not in name_to_most_recent_folder:
                 name_to_most_recent_folder[backup_folder.name] = copy.deepcopy(backup_folder)
