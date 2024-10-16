@@ -6,6 +6,9 @@ TODOs:
 - [X] Need to save info in the databases and merge info to save on the databases at every important step
 - [X] CLI arguments to already start with a drive added
 - [ ] Be able to add a slave drive and in the list of folders show master and slaves
+- [ ] Know how to add database models (use alembic https://stackoverflow.com/questions/24622170/using-alembic-api-from-inside-application-code and https://alembic.sqlalchemy.org/en/latest/tutorial.html)
+- [ ] Be able to save/load from database files
+- [ ] Handle migrations
 - [ ] Be able to know if a directory has changed, save previous state in metadata file
 - [ ] Set up a master drive and slave drives for each folder I want to backup, and keep that stored in the backup general metadata.
 - [ ] Store latest backup sync date in backup metadata.

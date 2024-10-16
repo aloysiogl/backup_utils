@@ -14,6 +14,7 @@ class InterfaceCommandEnum(Enum):
     LIST_FOLDERS = ('lf', 'lists known folders')
     ADD_DRIVE = ('ad', 'adds path to a drive')
     ADD_FOLDER = ('af', 'adds folder name')
+    ADD_FOLDER_SLAVE = ('afs', 'adds folder slave drive')
     PROMPT = ('', 'prompt')
     INVALID = (None, 'Invalid command')
 

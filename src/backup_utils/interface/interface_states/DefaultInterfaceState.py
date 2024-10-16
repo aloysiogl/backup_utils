@@ -3,6 +3,7 @@ from ..InterfaceCommand import InterfaceCommandEnum
 from ...LocalDatabaseList import LocalDatabaseList
 from .GetDrivePathState import GetDrivePathState
 from .AddFolderState import AddFolderState
+from .AddSlaveState import AddSlaveState
 
 
 class DefaultInterfaceState(InterfaceState):
@@ -11,6 +12,7 @@ class DefaultInterfaceState(InterfaceState):
         self.available_commands = [
             InterfaceCommandEnum.ADD_DRIVE,
             InterfaceCommandEnum.ADD_FOLDER,
+            InterfaceCommandEnum.ADD_FOLDER_SLAVE,
             InterfaceCommandEnum.LIST_DRIVES,
             InterfaceCommandEnum.LIST_FOLDERS,
             InterfaceCommandEnum.QUIT
@@ -30,6 +32,8 @@ class DefaultInterfaceState(InterfaceState):
             command_output = self._databases_list.get_folder_info_str()
         elif parsed_command == InterfaceCommandEnum.ADD_FOLDER:
             return NextStateWithMessage(AddFolderState(self._databases_list), '')
+        elif parsed_command == InterfaceCommandEnum.ADD_FOLDER_SLAVE:
+            return NextStateWithMessage(AddSlaveState(self._databases_list), '')
         elif parsed_command == InterfaceCommandEnum.INVALID:
             command_output = 'Invalid command'
 

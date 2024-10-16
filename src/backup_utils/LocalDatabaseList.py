@@ -24,7 +24,7 @@ class LocalDatabaseList:
             dirs = filter(filter_func, os.listdir(path))
             toplevel_paths.update(dirs)
         return toplevel_paths
-
+    
     def update_local_databases(self):
         merged_folders = self.get_merged_folder_list()
         merged_drives = self.get_merged_drive_list()
